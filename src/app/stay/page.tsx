@@ -1,6 +1,8 @@
 import { getRoomTypes } from './actions';
 import RoomsView from './RoomsView';
 
+export const dynamic = 'force-dynamic';
+
 export default async function StayPage() {
   const rooms = await getRoomTypes();
 

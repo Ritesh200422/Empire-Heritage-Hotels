@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import MenuView from './MenuView';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DinePage() {
   const categories = await prisma.menuCategory.findMany({
     include: {
