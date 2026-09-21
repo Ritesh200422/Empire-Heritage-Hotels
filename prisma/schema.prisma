@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Hotel {
+  id           String @id @default(uuid())
+  name         String
+  description  String @db.Text
+  address      String
+  checkInTime  String
+  checkOutTime String
+  contact      String
+}
+
+model RoomType {
+  id            String    @id @default(uuid())
+  name          String
+  description   String    @db.Text
+  maxAdults     Int
+  maxOccupancy  Int
+  pricePerNight Float
+  bedType       String
+  totalUnits    Int
+  amenities     Json
+  bookings      Booking[]
+}
+
+model Amenity {
+  id          String  @id @default(uuid())
+  name        String
+  description String  @db.Text
+  hours       String?
+  extraCost   Float?
+}
+
+model Policy {
+  id      String @id @default(uuid())
+  key     String @unique
+  title   String
+  content String @db.Text
+}
+
+model Faq {
+  id       String @id @default(uuid())
+  question String @db.Text
+  answer   String @db.Text
+  tags     Json
+}
+
+model Booking {
+  id         String   @id @default(uuid())
+  roomTypeId String
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+  checkIn    DateTime
+  checkOut   DateTime
+  status     String   @default("confirmed")
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  sessionId String
+  createdAt DateTime  @default(now())
+  messages  Message[]
+
+  @@index([sessionId])
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  role           String
+  content        String       @db.Text
+  metadata       Json?
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  messageId String
+  rating    String
+  comment   String?  @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([messageId])
+}
+
+model MenuCategory {
+  id          String     @id @default(uuid())
+  name        String
+  description String?    @db.Text
+  items       MenuItem[]
+}
+
+model MenuItem {
+  id           String       @id @default(uuid())
+  categoryId   String
+  category     MenuCategory @relation(fields: [categoryId], references: [id])
+  name         String
+  description  String       @db.Text
+  price        Float
+  isVeg        Boolean      @default(true)
+  spiceLevel   Int          @default(0) // 0: None, 1: Mild, 2: Medium, 3: High
+  isBestseller Boolean      @default(false)
+  imageUrl     String?
+  available    Boolean      @default(true)
+
+  @@index([categoryId])
+}
+
+model Order {
+  id            String   @id @default(uuid())
+  items         Json // Stores both room and food items { kind: "room" | "food", ... }
+  subtotal      Float
+  tax           Float
+  total         Float
+  paymentMethod String
+  status        String   @default("completed") // Since it's demo, default completed
+  createdAt     DateTime @default(now())
+}
