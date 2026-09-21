@@ -21,6 +21,8 @@ const FALLBACK_MESSAGE =
   "I'm sorry, I couldn't find a confident answer to your question. For assistance, please contact us at +1 (555) 123-4567 or reservations@grandazure.com.";
 const MAX_HISTORY_MESSAGES = 20;
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   const requestId = uuidv4();
   const log = createRequestLogger(requestId);
