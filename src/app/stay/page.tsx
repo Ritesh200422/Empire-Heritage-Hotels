@@ -4,7 +4,7 @@ import RoomsView from './RoomsView';
 export const dynamic = 'force-dynamic';
 
 export default async function StayPage() {
-  let rooms = [];
+  let rooms: any[] = [];
   let dbError = null;
 
   try {

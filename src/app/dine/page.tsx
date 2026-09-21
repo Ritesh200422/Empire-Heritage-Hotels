@@ -4,7 +4,7 @@ import MenuView from './MenuView';
 export const dynamic = 'force-dynamic';
 
 export default async function DinePage() {
-  let categories = [];
+  let categories: any[] = [];
   let dbError = null;
 
   try {
