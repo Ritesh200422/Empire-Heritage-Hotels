@@ -4,6 +4,8 @@ import { useState, useSyncExternalStore } from 'react';
 import { checkRoomAvailability } from './actions';
 import { useCartStore } from '@/store/cartStore';
 import type { AvailabilityResult, AvailabilityOption } from '@/lib/types';
+import Image from 'next/image';
+import { getRoomImage } from '@/lib/imageUrls';
 
 interface RoomType {
   id: string;
@@ -151,15 +153,12 @@ export default function RoomsView({ initialRooms }: { initialRooms: RoomType[] }
               className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row"
             >
               <div className="w-full md:w-1/3 h-48 md:h-auto min-h-[200px] relative">
-                <img 
-                  src={
-                    room.id.includes('standard') ? 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80' :
-                    room.id.includes('deluxe') ? 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80' :
-                    room.id.includes('family') ? 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80' :
-                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80'
-                  }
-                  alt={room.name}
-                  className="w-full h-full object-cover absolute inset-0"
+                <Image
+                  src={getRoomImage(room.name)}
+                  alt={`${room.name} room`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
                 />
               </div>
               {/* Details */}

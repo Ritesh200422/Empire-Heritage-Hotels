@@ -22,7 +22,7 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
   const isUser = message.role === 'user';
   const isFallback = message.type === 'fallback';
   const isError = message.type === 'error';
-  
+
   const [showTrust, setShowTrust] = useState(false);
   const [feedbackState, setFeedbackState] = useState<'idle' | 'submitting' | 'submitted'>('idle');
 
@@ -48,15 +48,14 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
       aria-label={`${isUser ? 'You' : 'Assistant'}: ${message.content}`}
     >
       <div
-        className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 ${
-          isUser
+        className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 ${isUser
             ? 'bg-blue-600 text-white rounded-br-md'
             : isError
               ? 'bg-red-50 text-red-800 border border-red-200 rounded-bl-md'
               : isFallback
                 ? 'bg-amber-50 text-amber-900 border border-amber-200 rounded-bl-md'
                 : 'bg-white text-slate-800 shadow-sm border border-slate-100 rounded-bl-md'
-        }`}
+          }`}
       >
         {isFallback && (
           <div className="flex items-center gap-1.5 text-xs text-amber-600 mb-1 font-medium">
@@ -90,22 +89,22 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
 
       {!isUser && !isError && message.mode && (
         <div className="mt-1 flex items-center gap-3 text-xs text-slate-500">
-          <button 
+          <button
             onClick={() => setShowTrust(!showTrust)}
             className="hover:text-blue-600 flex items-center gap-1"
           >
             Why this answer? {showTrust ? '▲' : '▼'}
           </button>
           <div className="flex items-center gap-1">
-            <button 
-              onClick={() => handleFeedback('up')} 
+            <button
+              onClick={() => handleFeedback('up')}
               disabled={feedbackState !== 'idle'}
               className="hover:text-green-600 disabled:opacity-50"
             >
               👍
             </button>
-            <button 
-              onClick={() => handleFeedback('down')} 
+            <button
+              onClick={() => handleFeedback('down')}
               disabled={feedbackState !== 'idle'}
               className="hover:text-red-600 disabled:opacity-50"
             >
@@ -116,23 +115,7 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
         </div>
       )}
 
-      {showTrust && !isUser && (
-        <div className="mt-2 max-w-[85%] sm:max-w-[75%] bg-slate-50 border border-slate-200 rounded p-3 text-xs text-slate-700">
-          <p className="font-semibold mb-1">Response Mode: <span className="font-normal capitalize">{message.mode}</span></p>
-          {message.sources && message.sources.length > 0 ? (
-            <div>
-              <p className="font-semibold mb-1">Sources Used:</p>
-              <ul className="list-disc pl-4 space-y-1">
-                {message.sources.map(s => (
-                  <li key={s.id}>{s.label}</li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <p>No knowledge base sources used.</p>
-          )}
-        </div>
-      )}
+
     </div>
   );
 }

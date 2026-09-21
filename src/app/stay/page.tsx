@@ -10,7 +10,8 @@ export default async function StayPage() {
   try {
     rooms = await getRoomTypes();
   } catch (error) {
-    dbError = error instanceof Error ? error.message : "Unknown database error";
+    console.error('Failed to load room types:', error);
+    dbError = 'Database unavailable';
   }
 
   return (
@@ -27,9 +28,9 @@ export default async function StayPage() {
             <li>You ran <code>npx prisma db push</code> on your remote database to create the tables.</li>
             <li>You ran <code>npx prisma db seed</code> to populate the rooms data.</li>
           </ul>
-          <div className="mt-4 p-3 bg-white bg-opacity-50 rounded text-xs font-mono text-red-800 break-all">
-            {dbError}
-          </div>
+          <p className="mt-4 text-xs text-red-600">
+            Check the server logs for the connection details.
+          </p>
         </div>
       ) : (
         <RoomsView initialRooms={rooms} />

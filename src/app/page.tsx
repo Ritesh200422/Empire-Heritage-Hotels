@@ -1,4 +1,21 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { getRoomImage } from '@/lib/imageUrls';
+
+const featuredRooms = [
+  {
+    name: 'Standard Room',
+    description: 'A refined and comfortable stay with everything you need for a relaxing visit.',
+  },
+  {
+    name: 'Deluxe Ocean View',
+    description: 'Wake up to sweeping views and enjoy extra space designed for an indulgent escape.',
+  },
+  {
+    name: 'Family Suite',
+    description: 'Spacious family-friendly accommodation with room for everyone to unwind.',
+  },
+];
 
 export default function Home() {
   return (
@@ -32,14 +49,20 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-serif text-center text-[#4a1c1c] mb-12">Our Signature Rooms</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow overflow-hidden border border-slate-100">
-                <div className="h-48 bg-slate-200 flex items-center justify-center text-slate-400">
-                  Room Image Placeholder
+            {featuredRooms.map((room) => (
+              <div key={room.name} className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow overflow-hidden border border-slate-100">
+                <div className="h-48 relative">
+                  <Image
+                    src={getRoomImage(room.name)}
+                    alt={`${room.name} at Empire Heritage Hotels`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#4a1c1c] mb-2">Deluxe Suite</h3>
-                  <p className="text-slate-600 mb-4 line-clamp-2">Experience ultimate comfort in our beautifully appointed suites designed for relaxation.</p>
+                  <h3 className="text-xl font-bold text-[#4a1c1c] mb-2">{room.name}</h3>
+                  <p className="text-slate-600 mb-4 line-clamp-2">{room.description}</p>
                   <Link href="/stay" className="text-[#b8860b] font-medium hover:underline">View Details &rarr;</Link>
                 </div>
               </div>

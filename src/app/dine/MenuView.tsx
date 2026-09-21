@@ -2,6 +2,8 @@
 
 import { useState, useMemo, useSyncExternalStore } from 'react';
 import { useCartStore } from '@/store/cartStore';
+import Image from 'next/image';
+import { getMenuImage } from '@/lib/imageUrls';
 
 interface MenuItemData {
   id: string;
@@ -165,10 +167,12 @@ function MenuItemCard({
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
       {/* Image */}
       <div className="h-36 sm:h-40 relative flex items-center justify-center text-slate-400 text-sm">
-        <img
-          src={item.isVeg ? 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80' : 'https://images.unsplash.com/photo-1589302168068-964664d93cb0?auto=format&fit=crop&w=800&q=80'}
-          alt={item.name}
-          className="w-full h-full object-cover absolute inset-0"
+        <Image
+          src={getMenuImage(item.name, item.description)}
+          alt={`${item.name} dish`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover"
         />
         {item.isBestseller && (
           <span className="absolute top-2 right-2 bg-[#b8860b] text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider z-10">

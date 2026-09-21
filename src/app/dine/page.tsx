@@ -14,7 +14,8 @@ export default async function DinePage() {
       }
     });
   } catch (error) {
-    dbError = error instanceof Error ? error.message : "Unknown database error";
+    console.error('Failed to load menu categories:', error);
+    dbError = 'Database unavailable';
   }
 
   return (
@@ -30,9 +31,9 @@ export default async function DinePage() {
             <li>You added a valid remote MySQL <strong>DATABASE_URL</strong> in Vercel Environment Variables.</li>
             <li>You ran <code>npx prisma db push</code> and <code>npx prisma db seed</code> on your remote database.</li>
           </ul>
-          <div className="mt-4 p-3 bg-white bg-opacity-50 rounded text-xs font-mono text-red-800 break-all">
-            {dbError}
-          </div>
+          <p className="mt-4 text-xs text-red-600">
+            Check the server logs for the connection details.
+          </p>
         </div>
       ) : (
         <MenuView categories={categories} />

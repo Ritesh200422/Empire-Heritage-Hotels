@@ -1,7 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { getEnv } from '@/lib/env';
 import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 

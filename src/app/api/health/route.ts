@@ -20,14 +20,12 @@ export async function GET() {
       { status: 200 },
     );
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : 'Unknown database error';
+    console.error('Database health check failed:', error);
     return NextResponse.json(
       {
         status: 'unhealthy',
         timestamp: new Date().toISOString(),
         database: 'disconnected',
-        error: message,
       },
       { status: 503 },
     );

@@ -86,6 +86,7 @@ describe('validateAvailabilityParams', () => {
 
   it('accepts 6 adults', () => {
     const result = validateAvailabilityParams(futureCheckIn, futureCheckOut, 6);
+    expect(result.nights).toBe(3);
   });
 });
 

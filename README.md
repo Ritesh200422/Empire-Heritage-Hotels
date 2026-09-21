@@ -56,6 +56,31 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Deploy to Vercel
+
+1. Push this repository to GitHub and import it in [Vercel](https://vercel.com/new).
+2. Keep the framework preset as **Next.js** and the build command as `npm run build`.
+3. Add these environment variables in the Vercel project settings for the **Production**, **Preview**, and **Development** environments:
+
+   ```env
+   DATABASE_URL="mysql://user:password@your-host:3306/hotel_assistant"
+   GEMINI_API_KEY="your-gemini-api-key"
+   GEMINI_MODEL="gemini-2.5-flash"
+   NEXT_PUBLIC_APP_NAME="Empire Heritage Hotels"
+   ```
+
+   `DATABASE_URL` must point to a hosted MySQL database; `localhost` will not work from Vercel.
+4. Create the Prisma tables and seed the hosted database from a machine that can access it:
+
+   ```bash
+   npx prisma db push
+   npx prisma db seed
+   ```
+
+5. Redeploy from Vercel and verify `/api/health`, `/stay`, and `/dine`.
+
+Never commit `.env` or paste API keys into source code. If a key has been exposed, revoke it and create a replacement before deploying.
+
 ## Available Commands
 
 | Command | Description |

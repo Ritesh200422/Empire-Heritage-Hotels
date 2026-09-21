@@ -1,5 +1,7 @@
 import type { AvailabilityResult, Alternative } from '@/lib/types';
 import { useCartStore } from '@/store/cartStore';
+import Image from 'next/image';
+import { getRoomImage } from '@/lib/imageUrls';
 
 interface RoomCardsProps {
   availability: AvailabilityResult;
@@ -62,15 +64,12 @@ export function RoomCards({ availability, alternatives, onAlternativeClick }: Ro
                     </span>
                     <h4 className="text-sm font-semibold text-slate-800 mb-1">{alt.roomName}</h4>
                     <div className="w-full h-32 relative -mx-4 my-3">
-                      <img 
-                        src={
-                          alt.roomName.toLowerCase().includes('standard') ? 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80' :
-                          alt.roomName.toLowerCase().includes('deluxe') ? 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80' :
-                          alt.roomName.toLowerCase().includes('family') ? 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80' :
-                          'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80'
-                        }
-                        alt={alt.roomName}
-                        className="w-full h-full object-cover absolute inset-0"
+                      <Image
+                        src={getRoomImage(alt.roomName)}
+                        alt={`${alt.roomName} room`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        className="object-cover"
                       />
                     </div>
                     <div className="space-y-1 text-xs text-slate-600">
@@ -115,15 +114,12 @@ export function RoomCards({ availability, alternatives, onAlternativeClick }: Ro
               )}
               <h4 className="text-sm font-semibold text-slate-800 mb-1">{option.name}</h4>
               <div className="w-full h-24 relative -mx-4 my-2" style={{width: 'calc(100% + 2rem)'}}>
-                <img 
-                  src={
-                    option.roomTypeId.includes('standard') ? 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80' :
-                    option.roomTypeId.includes('deluxe') ? 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80' :
-                    option.roomTypeId.includes('family') ? 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80' :
-                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80'
-                  }
-                  alt={option.name}
-                  className="w-full h-full object-cover"
+                <Image
+                  src={getRoomImage(option.name)}
+                  alt={`${option.name} room`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover"
                 />
               </div>
               <div className="space-y-1 text-xs text-slate-600 mb-3 flex-1">
