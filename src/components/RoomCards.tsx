@@ -54,7 +54,6 @@ export function RoomCards({ availability, alternatives, onAlternativeClick }: Ro
                   <button
                     key={idx}
                     onClick={() => onAlternativeClick?.({ checkIn: alt.checkIn, checkOut: alt.checkOut, adults: alt.adults })}
-                    className="text-left relative bg-white border border-blue-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-blue-400 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
                     className="text-left relative bg-white border border-blue-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-blue-400 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-hidden"
                     role="listitem"
                   >
