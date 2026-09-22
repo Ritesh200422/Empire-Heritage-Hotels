@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Empire Heritage Hotels - AI Concierge",
   description: "AI-powered hotel guest assistant for Empire Heritage Hotels. Ask about rooms, amenities, policies, and check availability.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 import Navbar from "@/components/Navbar";
