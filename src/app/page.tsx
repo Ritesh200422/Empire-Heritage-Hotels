@@ -57,6 +57,64 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Hotel Information */}
+      <section className="px-4 py-20 bg-white border-y border-[#eadfce]">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#b8860b] mb-4">The Empire Heritage Standard</p>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#4a1c1c] mb-6">
+              A considered stay, from arrival to farewell.
+            </h2>
+            <p className="text-lg leading-relaxed text-slate-600 mb-8">
+              Set in the heart of the city, Empire Heritage Hotels brings together gracious service,
+              restful rooms, and an in-house dining experience inspired by generations of Indian
+              hospitality. Every detail is designed to make business trips feel effortless and
+              weekends feel memorable.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                ['Prime city address', 'Close to cultural landmarks, business districts, and local experiences.'],
+                ['Thoughtful service', 'Our team and Royal Guard AI are available whenever you need assistance.'],
+                ['Restful rooms', 'Comfortable spaces, considered amenities, and flexible options for every stay.'],
+                ['Heritage dining', 'Seasonal menus and familiar flavours served with a modern touch.'],
+              ].map(([title, description]) => (
+                <div key={title} className="border-l-2 border-[#b8860b] pl-4">
+                  <h3 className="font-semibold text-[#4a1c1c] mb-1">{title}</h3>
+                  <p className="text-sm leading-relaxed text-slate-600">{description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-2xl bg-[#4a1c1c] p-8 md:p-10 text-white shadow-xl">
+            <p className="text-sm uppercase tracking-[0.18em] text-[#e1bd63] mb-6">At a glance</p>
+            <div className="space-y-6">
+              <div className="flex items-start justify-between gap-6 border-b border-white/15 pb-5">
+                <span className="text-slate-300">Check-in</span>
+                <span className="font-semibold text-right">From 2:00 PM</span>
+              </div>
+              <div className="flex items-start justify-between gap-6 border-b border-white/15 pb-5">
+                <span className="text-slate-300">Check-out</span>
+                <span className="font-semibold text-right">Until 11:00 AM</span>
+              </div>
+              <div className="flex items-start justify-between gap-6 border-b border-white/15 pb-5">
+                <span className="text-slate-300">Dining</span>
+                <span className="font-semibold text-right">Breakfast, lunch & dinner</span>
+              </div>
+              <div className="flex items-start justify-between gap-6">
+                <span className="text-slate-300">Guest assistance</span>
+                <span className="font-semibold text-right">Royal Guard AI, 24/7</span>
+              </div>
+            </div>
+            <Link
+              href="/about"
+              className="mt-8 inline-flex items-center text-[#e1bd63] font-medium hover:text-white transition-colors"
+            >
+              Discover our story <span className="ml-2" aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Rooms */}
       <section className="py-20 px-4 bg-[#fcfbf8]">
         <div className="max-w-6xl mx-auto">
