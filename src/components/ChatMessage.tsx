@@ -52,7 +52,7 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
         {!isUser && (
           <Image
             src="/concierge-bot.png"
-            alt="Empire Heritage AI Concierge"
+            alt="Royal Guard AI"
             width={32}
             height={32}
             className="h-8 w-8 rounded-full object-cover flex-shrink-0"

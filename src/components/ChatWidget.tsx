@@ -34,7 +34,7 @@ export default function ChatWidget() {
       id: 'welcome',
       role: 'assistant',
       content:
-        'Welcome to Empire Heritage Hotels! 🌊 I\'m your AI concierge. I can help you with room availability, hotel amenities, policies, and more. How can I assist you today?',
+        'Welcome to Empire Heritage Hotels! 🌊 I\'m Royal Guard AI. I can help you with room availability, hotel amenities, policies, and more. How can I assist you today?',
       type: 'answer',
     },
   ]);
@@ -167,13 +167,13 @@ export default function ChatWidget() {
             <div className="flex items-center gap-3">
               <Image
                 src="/concierge-bot.png"
-                alt="Empire Heritage AI Concierge"
+                alt="Royal Guard AI"
                 width={40}
                 height={40}
                 className="h-10 w-10 rounded-full object-cover"
               />
               <div>
-                <h2 className="text-sm font-semibold">AI Concierge</h2>
+                <h2 className="text-sm font-semibold">Royal Guard AI</h2>
                 <p className="text-xs opacity-80">Always here to help</p>
               </div>
             </div>

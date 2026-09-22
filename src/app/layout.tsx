@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Empire Heritage Hotels - AI Concierge",
-  description: "AI-powered hotel guest assistant for Empire Heritage Hotels. Ask about rooms, amenities, policies, and check availability.",
+  title: "Empire Heritage Hotels - Royal Guard AI",
+  description: "Royal Guard AI is the hotel guest assistant for Empire Heritage Hotels. Ask about rooms, amenities, policies, and check availability.",
   icons: {
     icon: "/favicon.png",
     shortcut: "/favicon.png",

@@ -1,6 +1,6 @@
 # The Grand Azure Hotel — AI Guest Assistant
 
-An AI-powered hotel concierge chatbot built with Next.js 15, Google Gemini, MySQL, and Prisma.
+Royal Guard AI is an AI-powered hotel guest assistant built with Next.js 15, Google Gemini, MySQL, and Prisma.
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
