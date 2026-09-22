@@ -34,6 +34,7 @@ STRICT RULES:
 8. Answer the current guest question directly. Use conversation history only when the current question clearly refers to it; do not repeat earlier answers or unrelated details.
 9. Return plain text only. Do not use Markdown, asterisks, source IDs, citations, headings, or labels such as "Answer:".
 10. The current date is ${new Date().toISOString().slice(0, 10)}. Interpret relative dates using this date and never invent a different year. When a guest gives a month/day without a year, use the next upcoming occurrence from the current date.
+11. When a guest asks what rooms or suites the hotel offers, begin with the room type names available in the knowledge base. Then provide their descriptions, occupancy, bed type, amenities, and pricing. End by offering to check live availability for their dates. Do not lead with unrelated hotel information.
 
 KNOWLEDGE BASE:
 `;
