@@ -40,6 +40,11 @@ function isRoomCatalogQuestion(message: string): boolean {
     && !/\b(available|availability|book|booking|reserve|reservation)\b/i.test(message);
 }
 
+function needsConversationContext(message: string): boolean {
+  return /^(and|also|what about|how about|which one|that one|the same|it|they|them|there|those|these)\b/i.test(message.trim())
+    || /\b(as mentioned|as I said|earlier|previously|you said|your last answer|my booking|my reservation)\b/i.test(message);
+}
+
 function buildRoomInformationAnswer(kb: Awaited<ReturnType<typeof loadKnowledgeBase>>): string | null {
   if (kb.roomTypes.length === 0) return null;
 
@@ -122,11 +127,12 @@ export async function POST(request: NextRequest) {
 
     // 5. Load conversation history from MySQL
     const history = await loadConversationHistory(sessionId);
+    const contextHistory = needsConversationContext(message) ? history.slice(-6) : [];
 
     // 6. Call Gemini
     let geminiResult;
     try {
-      geminiResult = await callGemini(message, history, kb, requestId);
+      geminiResult = await callGemini(message, contextHistory, kb, requestId);
     } catch (error) {
       log.error({ err: error }, 'Gemini call failed, trying degraded mode');
       return await handleDegradedMode(message, kb, sessionId, requestId);
@@ -137,7 +143,7 @@ export async function POST(request: NextRequest) {
       return await handleToolCalls(
         geminiResult.toolCalls,
         message,
-        history,
+        contextHistory,
         kb,
         sessionId,
         requestId,
