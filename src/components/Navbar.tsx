@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useCartStore } from '../store/cartStore';
 import { useAuthStore } from '../store/authStore';
 import { useState, useEffect } from 'react';
 
@@ -10,11 +11,14 @@ const appName = process.env.NEXT_PUBLIC_APP_NAME || 'Empire Heritage Hotels';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { items } = useCartStore();
   const { email, logout } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  const totalCartItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const navLinks = [
     { name: 'Stay', path: '/stay' },
@@ -92,6 +96,25 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t p-4 flex flex-col gap-4">
+          <Link
+            href="/cart"
+            className="flex items-center justify-between rounded-md bg-[#fcfbf8] px-3 py-2 text-[#4a1c1c] font-medium hover:bg-[#f4ead8] transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <span className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.5h7.8a2 2 0 0 0 1.9-1.4L21 8H6" />
+                <circle cx="10" cy="20" r="1" />
+                <circle cx="18" cy="20" r="1" />
+              </svg>
+              Cart
+            </span>
+            {mounted && totalCartItems > 0 && (
+              <span className="rounded-full bg-[#b8860b] px-2 py-0.5 text-xs font-bold text-white">
+                {totalCartItems}
+              </span>
+            )}
+          </Link>
           {navLinks.map((link) => (
             <Link
               key={link.path}
