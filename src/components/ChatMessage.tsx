@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import type { AvailabilityResult, ChatResponseType, MissingField, SourceLabel } from '@/lib/types';
 
 export interface Message {
@@ -47,8 +48,18 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
       role="article"
       aria-label={`${isUser ? 'You' : 'Assistant'}: ${message.content}`}
     >
-      <div
-        className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 ${isUser
+      <div className={`flex items-end gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+        {!isUser && (
+          <Image
+            src="/concierge-bot.png"
+            alt="Empire Heritage AI Concierge"
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-full object-cover flex-shrink-0"
+          />
+        )}
+        <div
+          className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 ${isUser
             ? 'bg-blue-600 text-white rounded-br-md'
             : isError
               ? 'bg-red-50 text-red-800 border border-red-200 rounded-bl-md'
@@ -85,6 +96,7 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
             Retry
           </button>
         )}
+        </div>
       </div>
 
       {!isUser && !isError && message.mode && (

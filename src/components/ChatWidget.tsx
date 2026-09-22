@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { ChatMessage, type Message } from './ChatMessage';
 import { ChatInput } from './ChatInput';
 import { SuggestedChips } from './SuggestedChips';
@@ -164,9 +165,13 @@ export default function ChatWidget() {
           {/* Header */}
           <header className="bg-[#4a1c1c] px-4 py-3 flex items-center justify-between flex-shrink-0 text-white">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#b8860b] flex items-center justify-center font-bold text-white">
-                A
-              </div>
+              <Image
+                src="/concierge-bot.png"
+                alt="Empire Heritage AI Concierge"
+                width={40}
+                height={40}
+                className="h-10 w-10 rounded-full object-cover"
+              />
               <div>
                 <h2 className="text-sm font-semibold">AI Concierge</h2>
                 <p className="text-xs opacity-80">Always here to help</p>
@@ -208,11 +213,9 @@ export default function ChatWidget() {
             </div>
           </div>
 
-          {messages.length <= 2 && !isLoading && (
-            <div className="px-4 pb-2 bg-slate-50 flex-shrink-0">
-              <SuggestedChips onChipClick={handleChipClick} />
-            </div>
-          )}
+          <div className="px-4 pb-2 bg-slate-50 flex-shrink-0">
+            <SuggestedChips onChipClick={handleChipClick} disabled={isLoading} />
+          </div>
 
           {/* Input */}
           <div className="px-4 py-3 bg-white border-t border-slate-200 flex-shrink-0">

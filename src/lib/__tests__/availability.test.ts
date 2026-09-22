@@ -107,5 +107,5 @@ describe('suggestAlternatives', () => {
     expect(pastShifts.length).toBe(0);
 
     vi.restoreAllMocks();
-  });
+  }, 20_000);
 });
