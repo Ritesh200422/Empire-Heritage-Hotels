@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { prisma } from '@/lib/prisma';
 import { chatRequestSchema } from '@/lib/validation';
 import { checkRateLimit } from '@/lib/rate-limit';
-import { loadKnowledgeBase, matchFaqByKeywords, getSourceLabel } from '@/lib/knowledge';
+import { loadKnowledgeBase, matchFaqByKeywords } from '@/lib/knowledge';
 import { callGemini, callGeminiWithToolResult } from '@/lib/gemini';
 import { checkAvailability, findRoomsForGuests, suggestAlternatives, AvailabilityError } from '@/lib/availability';
 import { createRequestLogger } from '@/lib/logger';
@@ -20,6 +20,15 @@ import type { Content } from '@google/genai';
 const FALLBACK_MESSAGE =
   "I'm sorry, I couldn't find a confident answer to your question. For assistance, please contact us at +1 (555) 123-4567 or reservations@grandazure.com.";
 const MAX_HISTORY_MESSAGES = 20;
+
+function cleanAssistantText(text: string) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/\[source:\s*[^\]]+\]\s*/gi, '')
+    .trim();
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -142,7 +151,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 8. Success - return answer
-    const answer = geminiResult.answer!;
+    const answer = cleanAssistantText(geminiResult.answer!);
     await saveMessages(sessionId, message, answer, requestId);
 
     const latency = Date.now() - startTime;
@@ -359,8 +368,7 @@ async function handleToolCalls(
             return jsonResponse({
               type: 'answer',
               mode: 'ai',
-              message: result.answer,
-              sources: result.usedSourceIds as any,
+                message: cleanAssistantText(result.answer),
               requestId,
             }, 200, kb);
           }
@@ -374,8 +382,7 @@ async function handleToolCalls(
         return jsonResponse({
           type: 'answer',
           mode: 'ai',
-          message: simpleResponse,
-          sources: rooms.map((r) => r.roomTypeId) as any,
+          message: cleanAssistantText(simpleResponse),
           requestId,
         }, 200, kb);
       } catch (error) {
@@ -414,7 +421,6 @@ async function handleDegradedMode(
       type: 'answer',
       mode: 'degraded',
       message: faqMatch.answer,
-      sources: [faqMatch.sourceId] as any,
       requestId,
     }, 200, kb);
   }
@@ -477,7 +483,7 @@ async function saveMessages(
         {
           conversationId: conversation.id,
           role: 'assistant',
-          content: assistantMessage,
+          content: cleanAssistantText(assistantMessage),
           metadata: { requestId },
         },
       ],
@@ -493,14 +499,11 @@ async function saveMessages(
 
 /** Helper to create consistent JSON responses */
 function jsonResponse(data: ChatResponse, status = 200, kb?: Awaited<ReturnType<typeof loadKnowledgeBase>>) {
-  // If sources are strings, map them to SourceLabels
-  let formattedSources = data.sources;
-  if (data.sources && data.sources.length > 0 && typeof data.sources[0] === 'string' && kb) {
-    formattedSources = (data.sources as unknown as string[]).map(id => ({
-      id,
-      label: getSourceLabel(id, kb)
-    })) as any;
-  }
-  
-  return NextResponse.json({ ...data, sources: formattedSources }, { status });
+  const publicData = { ...data };
+  delete publicData.sources;
+  void kb;
+  return NextResponse.json(
+    { ...publicData, message: cleanAssistantText(publicData.message) },
+    { status },
+  );
 }

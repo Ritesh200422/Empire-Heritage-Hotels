@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import type { AvailabilityResult, ChatResponseType, MissingField, SourceLabel } from '@/lib/types';
+import type { AvailabilityResult, ChatResponseType, MissingField } from '@/lib/types';
 
 export interface Message {
   id: string;
@@ -8,7 +8,6 @@ export interface Message {
   content: string;
   type: ChatResponseType;
   mode?: 'ai' | 'degraded' | 'fallback';
-  sources?: SourceLabel[];
   availability?: AvailabilityResult;
   alternatives?: import('@/lib/types').Alternative[];
   missingFields?: MissingField[];
@@ -24,7 +23,6 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
   const isFallback = message.type === 'fallback';
   const isError = message.type === 'error';
 
-  const [showTrust, setShowTrust] = useState(false);
   const [feedbackState, setFeedbackState] = useState<'idle' | 'submitting' | 'submitted'>('idle');
 
   const handleFeedback = async (rating: 'up' | 'down') => {
@@ -101,12 +99,6 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
 
       {!isUser && !isError && message.mode && (
         <div className="mt-1 flex items-center gap-3 text-xs text-slate-500">
-          <button
-            onClick={() => setShowTrust(!showTrust)}
-            className="hover:text-blue-600 flex items-center gap-1"
-          >
-            Why this answer? {showTrust ? '▲' : '▼'}
-          </button>
           <div className="flex items-center gap-1">
             <button
               onClick={() => handleFeedback('up')}

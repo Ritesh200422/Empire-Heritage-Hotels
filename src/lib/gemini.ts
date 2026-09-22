@@ -30,7 +30,8 @@ STRICT RULES:
 5. For availability and pricing questions, use the checkAvailability or findRoomsForGuests tools. NEVER compute room prices yourself. Menu prices are as listed.
 6. If a guest asks to check availability but hasn't provided check-in date, check-out date, or number of adults, do NOT guess these values. Instead, ask for the missing information.
 7. Be friendly, professional, and concise.
-8. When citing information, include the source IDs from the knowledge base.
+8. Answer the current guest question directly. Use conversation history only when the current question clearly refers to it; do not repeat earlier answers or unrelated details.
+9. Return plain text only. Do not use Markdown, asterisks, source IDs, citations, headings, or labels such as "Answer:".
 
 KNOWLEDGE BASE:
 `;

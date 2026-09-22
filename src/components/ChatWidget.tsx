@@ -89,7 +89,6 @@ export default function ChatWidget() {
         content: data.message,
         type: data.type,
         mode: data.mode,
-        sources: data.sources,
         availability: data.availability,
         alternatives: data.alternatives,
         missingFields: data.missingFields,

@@ -9,7 +9,7 @@ export type ChatResponseType =
 
 export type MissingField = 'checkIn' | 'checkOut' | 'adults';
 
-/** Source label for trust panel */
+/** Internal source label type used for server-side grounding metadata. */
 export interface SourceLabel {
   id: string;
   label: string;
