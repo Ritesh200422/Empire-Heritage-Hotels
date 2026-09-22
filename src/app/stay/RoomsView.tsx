@@ -140,7 +140,7 @@ export default function RoomsView({ initialRooms }: { initialRooms: RoomType[] }
             disabled={isLoading}
             className="bg-[#4a1c1c] text-white px-6 py-2.5 rounded-lg hover:bg-[#602323] disabled:opacity-50 transition-colors font-medium"
           >
-            {isLoading ? 'Checking...' : 'Check Availability'}
+            {isLoading ? 'Checking...' : 'Check Rooms Available'}
           </button>
         </div>
       </form>
@@ -151,20 +151,32 @@ export default function RoomsView({ initialRooms }: { initialRooms: RoomType[] }
         </div>
       )}
 
-      {/* Room Cards */}
-      <div className="space-y-6">
-        {initialRooms.map((room) => {
+      {!availability && !isLoading && !error && (
+        <div className="rounded-xl border border-[#eadfce] bg-[#fffaf0] px-6 py-10 text-center">
+          <h2 className="text-xl font-serif font-bold text-[#4a1c1c] mb-2">
+            Find your perfect room
+          </h2>
+          <p className="text-slate-600">
+            Select your dates and number of guests above to see rooms available for your stay.
+          </p>
+        </div>
+      )}
+
+      {/* Room Cards — shown after the guest checks availability */}
+      {availability && (
+        <div className="space-y-6">
+          {initialRooms.map((room) => {
           const availOption = availability?.options?.find(
             (o: AvailabilityOption) => o.roomTypeId === room.id,
           );
           const isSearched = availability !== null;
           const wasAdded = addedIds.has(room.id);
 
-          return (
-            <div
-              key={room.id}
-              className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row"
-            >
+            return (
+              <div
+                key={room.id}
+                className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row"
+              >
               <div className="w-full md:w-1/3 h-48 md:h-auto min-h-[200px] relative">
                 <Image
                   src={getRoomImage(room.name)}
@@ -240,10 +252,11 @@ export default function RoomsView({ initialRooms }: { initialRooms: RoomType[] }
                   )}
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
