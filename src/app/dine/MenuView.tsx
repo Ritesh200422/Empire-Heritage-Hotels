@@ -4,6 +4,7 @@ import { useState, useMemo, useSyncExternalStore } from 'react';
 import { useCartStore } from '@/store/cartStore';
 import Image from 'next/image';
 import { getMenuImage } from '@/lib/imageUrls';
+import Link from 'next/link';
 
 interface MenuItemData {
   id: string;
@@ -38,6 +39,9 @@ export default function MenuView({ categories }: { categories: CategoryData[] })
   const [filterVeg, setFilterVeg] = useState<VegFilter>('all');
   const [sortPrice, setSortPrice] = useState<PriceSort>('none');
   const addItem = useCartStore((s) => s.addItem);
+  const cartItemCount = useCartStore((s) =>
+    s.items.reduce((total, item) => total + item.quantity, 0),
+  );
 
   const handleAddToCart = (item: MenuItemData, quantity: number) => {
     addItem({
@@ -76,6 +80,19 @@ export default function MenuView({ categories }: { categories: CategoryData[] })
 
   return (
     <div>
+      {cartItemCount > 0 && (
+        <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-xl border border-[#eadfce] bg-[#fffaf0] px-4 py-3">
+          <p className="text-sm text-[#4a1c1c]">
+            <span className="font-semibold">{cartItemCount} item{cartItemCount === 1 ? '' : 's'}</span> in your cart
+          </p>
+          <Link
+            href="/cart"
+            className="inline-flex items-center justify-center rounded-md bg-[#4a1c1c] px-4 py-2 text-sm font-medium text-white hover:bg-[#602323] transition-colors"
+          >
+            View Cart & Checkout
+          </Link>
+        </div>
+      )}
       {/* Filters Row */}
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center mb-6">
         <input

@@ -70,6 +70,18 @@ export default function Navbar() {
             </svg>
             <span className="hidden lg:inline text-sm font-medium">Book a Stay</span>
           </Link>
+          <Link
+            href="/cart"
+            className="hidden md:flex items-center gap-1.5 rounded-md px-2 py-2 text-sm font-medium text-[#4a1c1c] hover:bg-[#fcfbf8] hover:text-[#b8860b] transition-colors"
+            aria-label="Open cart"
+          >
+            Cart
+            {mounted && totalCartItems > 0 && (
+              <span className="rounded-full bg-[#b8860b] px-1.5 py-0.5 text-[10px] font-bold leading-none text-white">
+                {totalCartItems}
+              </span>
+            )}
+          </Link>
           
           <div className="hidden md:block">
             {mounted && email ? (
