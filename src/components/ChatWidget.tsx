@@ -151,10 +151,16 @@ export default function ChatWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 w-14 h-14 bg-[#4a1c1c] text-white rounded-full shadow-lg hover:bg-[#602323] transition-colors flex items-center justify-center z-50"
-          aria-label="Open AI Assistant"
+          className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 w-16 h-16 rounded-full bg-[#4a1c1c] p-1.5 text-white shadow-[0_8px_30px_rgba(74,28,28,0.45)] ring-2 ring-[#b8860b]/70 hover:scale-105 hover:shadow-[0_10px_36px_rgba(74,28,28,0.6)] transition-all duration-200 flex items-center justify-center z-50"
+          aria-label="Open Royal Guard AI"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <Image
+            src="/royal-guard-ai.png"
+            alt=""
+            width={64}
+            height={64}
+            className="h-full w-full rounded-full object-cover"
+          />
         </button>
       )}
 

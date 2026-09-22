@@ -34,7 +34,8 @@ export default function RoomsView({ initialRooms }: { initialRooms: RoomType[] }
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const addItem = useCartStore((s) => s.addItem);
 
-  const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
   const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
