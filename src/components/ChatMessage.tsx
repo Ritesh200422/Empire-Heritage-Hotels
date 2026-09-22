@@ -64,24 +64,24 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
       role="article"
       aria-label={`${isUser ? 'You' : 'Assistant'}: ${message.content}`}
     >
-      <div className={`flex items-end gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+      <div className={`flex w-full items-end gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
         {!isUser && (
           <Image
             src="/concierge-bot.png"
             alt="Royal Guard AI"
             width={32}
             height={32}
-            className="h-8 w-8 rounded-full object-cover flex-shrink-0"
+            className="h-8 w-8 rounded-full object-cover flex-shrink-0 shadow-sm"
           />
         )}
         <div
-          className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 ${isUser
-            ? 'bg-blue-600 text-white rounded-br-md'
+          className={`max-w-[calc(100%-2.5rem)] sm:max-w-[82%] rounded-2xl px-4 py-3 shadow-sm ${isUser
+            ? 'bg-[#4a1c1c] text-white rounded-br-md'
             : isError
               ? 'bg-red-50 text-red-800 border border-red-200 rounded-bl-md'
               : isFallback
                 ? 'bg-amber-50 text-amber-900 border border-amber-200 rounded-bl-md'
-                : 'bg-white text-slate-800 shadow-sm border border-slate-100 rounded-bl-md'
+                : 'bg-white text-slate-800 border border-[#eadfce] rounded-bl-md'
           }`}
       >
         {isFallback && (
@@ -101,7 +101,7 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
           </div>
         )}
 
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+        <p className="text-sm leading-6 whitespace-pre-wrap break-words text-pretty">{message.content}</p>
 
         {isError && onRetry && (
           <button

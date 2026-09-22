@@ -12,16 +12,16 @@ const suggestions = [
 
 export function SuggestedChips({ onChipClick, disabled = false }: SuggestedChipsProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
       {suggestions.map((s) => (
         <button
           key={s.label}
           onClick={() => onChipClick(s.question)}
           disabled={disabled}
-          className="px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 rounded-full text-slate-600 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="min-h-9 rounded-lg border border-[#eadfce] bg-white px-2.5 py-2 text-xs font-medium leading-tight text-[#4a1c1c] shadow-sm hover:border-[#b8860b] hover:bg-[#fffaf0] hover:text-[#602323] disabled:cursor-not-allowed disabled:opacity-50 transition-colors focus:outline-none focus:ring-2 focus:ring-[#b8860b] focus:ring-offset-1 sm:min-h-0 sm:rounded-full sm:px-3 sm:py-1.5"
           aria-label={`Ask: ${s.question}`}
         >
-          {s.label}
+          <span className="block truncate">{s.label}</span>
         </button>
       ))}
     </div>

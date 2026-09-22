@@ -168,9 +168,9 @@ export default function ChatWidget() {
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 w-full h-full sm:w-[400px] sm:h-[600px] bg-white sm:rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden border border-slate-200">
+        <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 w-full h-full sm:w-[420px] sm:h-[640px] bg-white sm:rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden border border-[#eadfce]">
           {/* Header */}
-          <header className="bg-[#4a1c1c] px-4 py-3 flex items-center justify-between flex-shrink-0 text-white">
+          <header className="bg-[#4a1c1c] px-5 py-4 flex items-center justify-between flex-shrink-0 text-white">
             <div className="flex items-center gap-3">
               <Image
                 src="/concierge-bot.png"
@@ -190,8 +190,8 @@ export default function ChatWidget() {
           </header>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 bg-slate-50" role="log" aria-live="polite">
-            <div className="space-y-4">
+          <div className="flex-1 overflow-y-auto px-4 py-5 sm:px-5 bg-[#faf9f6]" role="log" aria-live="polite">
+            <div className="space-y-5">
               {messages.map((msg) => (
                 <ChatMessage key={msg.id} message={msg} onRetry={msg.type === 'error' ? handleRetry : undefined} />
               ))}
@@ -221,12 +221,13 @@ export default function ChatWidget() {
             </div>
           </div>
 
-          <div className="px-4 pb-2 bg-slate-50 flex-shrink-0">
+          <div className="px-4 pb-3 sm:px-5 bg-[#faf9f6] flex-shrink-0">
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">Quick questions</p>
             <SuggestedChips onChipClick={handleChipClick} disabled={isLoading} />
           </div>
 
           {/* Input */}
-          <div className="px-4 py-3 bg-white border-t border-slate-200 flex-shrink-0">
+          <div className="px-4 py-4 sm:px-5 bg-white border-t border-[#eadfce] flex-shrink-0">
             <ChatInput onSend={sendMessage} disabled={isLoading} />
           </div>
         </div>
