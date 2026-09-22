@@ -23,21 +23,39 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
   const isFallback = message.type === 'fallback';
   const isError = message.type === 'error';
 
-  const [feedbackState, setFeedbackState] = useState<'idle' | 'submitting' | 'submitted'>('idle');
+  const [feedbackState, setFeedbackState] = useState<'idle' | 'composing' | 'submitting' | 'submitted'>('idle');
+  const [feedbackRating, setFeedbackRating] = useState<'up' | 'down' | null>(null);
+  const [feedbackComment, setFeedbackComment] = useState('');
 
-  const handleFeedback = async (rating: 'up' | 'down') => {
+  const handleFeedback = async (rating: 'up' | 'down', comment?: string) => {
     if (feedbackState !== 'idle') return;
     setFeedbackState('submitting');
     try {
-      await fetch('/api/feedback', {
+      const response = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messageId: message.id, rating })
+        body: JSON.stringify({ messageId: message.id, rating, comment: comment?.trim() || undefined })
       });
+      if (!response.ok) throw new Error('Feedback request failed');
       setFeedbackState('submitted');
     } catch {
       setFeedbackState('idle');
     }
+  };
+
+  const selectFeedback = (rating: 'up' | 'down') => {
+    if (feedbackState !== 'idle') return;
+    if (rating === 'up') {
+      void handleFeedback(rating);
+      return;
+    }
+    setFeedbackRating(rating);
+    setFeedbackState('composing');
+  };
+
+  const submitFeedback = () => {
+    if (!feedbackRating) return;
+    void handleFeedback(feedbackRating, feedbackComment);
   };
 
   return (
@@ -101,21 +119,55 @@ export function ChatMessage({ message, onRetry }: ChatMessageProps) {
         <div className="mt-1 flex items-center gap-3 text-xs text-slate-500">
           <div className="flex items-center gap-1">
             <button
-              onClick={() => handleFeedback('up')}
+              onClick={() => selectFeedback('up')}
               disabled={feedbackState !== 'idle'}
+              aria-label="Helpful response"
               className="hover:text-green-600 disabled:opacity-50"
             >
               👍
             </button>
             <button
-              onClick={() => handleFeedback('down')}
+              onClick={() => selectFeedback('down')}
               disabled={feedbackState !== 'idle'}
+              aria-label="Unhelpful response"
               className="hover:text-red-600 disabled:opacity-50"
             >
               👎
             </button>
             {feedbackState === 'submitted' && <span className="text-[10px] text-green-600 ml-1">Thanks!</span>}
           </div>
+          {feedbackState === 'composing' && (
+            <div className="mt-2 w-full max-w-sm rounded-lg border border-slate-200 bg-white p-2 shadow-sm">
+              <label htmlFor={`feedback-${message.id}`} className="sr-only">
+                Tell us how the answer could improve
+              </label>
+              <textarea
+                id={`feedback-${message.id}`}
+                value={feedbackComment}
+                onChange={(event) => setFeedbackComment(event.target.value)}
+                placeholder="What could we improve? (optional)"
+                maxLength={1000}
+                rows={2}
+                className="w-full resize-none rounded border border-slate-200 px-2 py-1.5 text-xs text-slate-800 placeholder:text-slate-400 focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b]"
+              />
+              <div className="mt-2 flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => { setFeedbackState('idle'); setFeedbackRating(null); setFeedbackComment(''); }}
+                  className="rounded px-2 py-1 text-xs text-slate-600 hover:bg-slate-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={submitFeedback}
+                  className="rounded bg-[#4a1c1c] px-2 py-1 text-xs font-medium text-white hover:bg-[#602323]"
+                >
+                  Send feedback
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

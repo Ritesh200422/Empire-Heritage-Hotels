@@ -70,6 +70,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
               </div>
             </div>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm">
+              <span className="font-medium text-[#f8e8c1]">Reservations & guest care</span>
+              <a href="tel:+919876543210" className="text-slate-300 hover:text-white transition-colors">+91 98765 43210</a>
+              <span className="hidden sm:inline text-white/30" aria-hidden="true">|</span>
+              <a href="mailto:reservations@empireheritage.demo" className="text-slate-300 hover:text-white transition-colors">reservations@empireheritage.demo</a>
+            </div>
             <div className="mt-12 border-t border-white/15 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-400">
               <p>&copy; {new Date().getFullYear()} {process.env.NEXT_PUBLIC_APP_NAME || 'Empire Heritage Hotels'}. All rights reserved.</p>
               <p>Designed with care for memorable stays.</p>

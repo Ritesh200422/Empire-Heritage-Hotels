@@ -39,9 +39,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const assistantMessage = await prisma.message.findFirst({
+      where: {
+        role: 'assistant',
+        metadata: { path: '$.requestId', equals: messageId },
+      },
+      orderBy: { createdAt: 'desc' },
+      select: { id: true },
+    });
+
     await prisma.feedback.create({
       data: {
-        messageId,
+        messageId: assistantMessage?.id ?? messageId,
         rating,
         comment,
       },

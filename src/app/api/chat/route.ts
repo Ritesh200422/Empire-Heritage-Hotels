@@ -18,7 +18,7 @@ import type { ChatResponse, MissingField } from '@/lib/types';
 import type { Content } from '@google/genai';
 
 const FALLBACK_MESSAGE =
-  "I'm sorry, I couldn't find a confident answer to your question. For assistance, please contact us at +1 (555) 123-4567 or reservations@grandazure.com.";
+  "I'm sorry, I couldn't find a confident answer to your question. For assistance, please contact us at +91 98765 43210 or reservations@empireheritage.demo.";
 const MAX_HISTORY_MESSAGES = 20;
 
 function cleanAssistantText(text: string) {
