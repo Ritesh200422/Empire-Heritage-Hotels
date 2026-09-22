@@ -30,6 +30,21 @@ function cleanAssistantText(text: string) {
     .trim();
 }
 
+function isRoomInformationQuestion(message: string): boolean {
+  return /\b(room|rooms|suite|suites|accommodation|stay|bedroom|available room)\b/i.test(message);
+}
+
+function buildRoomInformationAnswer(kb: Awaited<ReturnType<typeof loadKnowledgeBase>>): string | null {
+  if (kb.roomTypes.length === 0) return null;
+
+  const roomLines = kb.roomTypes.map(
+    (room) =>
+      `${room.name}: ${room.description} Rates start at ₹${room.pricePerNight.toLocaleString('en-IN')} per night, accommodating up to ${room.maxOccupancy} guests with a ${room.bedType} bed.`,
+  );
+
+  return `We offer ${kb.roomTypes.length} room options at Empire Heritage Hotels:\n\n${roomLines.join('\n\n')}\n\nShare your check-in date, check-out date, and number of adults, and I can check live availability for you.`;
+}
+
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
@@ -111,6 +126,19 @@ export async function POST(request: NextRequest) {
     }
 
     if (geminiResult.type === 'fallback' || !geminiResult.confident) {
+      const roomAnswer = isRoomInformationQuestion(message)
+        ? buildRoomInformationAnswer(kb)
+        : null;
+      if (roomAnswer) {
+        await saveMessages(sessionId, message, roomAnswer, requestId);
+        return jsonResponse({
+          type: 'answer',
+          mode: 'ai',
+          message: roomAnswer,
+          requestId,
+        }, 200, kb);
+      }
+
       log.info({ reason: 'not_confident_or_fallback' }, 'Returning fallback');
       // Try FAQ matching as best-effort
       const faqMatch = matchFaqByKeywords(message, kb.faqs);

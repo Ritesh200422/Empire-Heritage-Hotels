@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useSyncExternalStore } from 'react';
+import { useRouter } from 'next/navigation';
 import { checkRoomAvailability } from './actions';
 import { useCartStore } from '@/store/cartStore';
 import type { AvailabilityResult, AvailabilityOption } from '@/lib/types';
@@ -23,19 +24,29 @@ const subscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
+function getLocalDateString(date = new Date()): string {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function getTomorrowString(): string {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return getLocalDateString(tomorrow);
+}
+
 export default function RoomsView({ initialRooms }: { initialRooms: RoomType[] }) {
   const mounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
+  const [checkIn, setCheckIn] = useState(getLocalDateString());
+  const [checkOut, setCheckOut] = useState(getTomorrowString());
   const [adults, setAdults] = useState(2);
   const [availability, setAvailability] = useState<AvailabilityResult | null>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const addItem = useCartStore((s) => s.addItem);
+  const router = useRouter();
 
-  const now = new Date();
-  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const today = getLocalDateString();
 
   const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,6 +79,7 @@ export default function RoomsView({ initialRooms }: { initialRooms: RoomType[] }
       roomId: room.id,
     });
     setAddedIds((prev) => new Set(prev).add(room.id));
+    router.push('/cart');
   };
 
   if (!mounted) return null;

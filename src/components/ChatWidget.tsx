@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ChatMessage, type Message } from './ChatMessage';
 import { ChatInput } from './ChatInput';
@@ -28,6 +29,7 @@ function getSessionId(): string {
 }
 
 export default function ChatWidget() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -201,6 +203,7 @@ export default function ChatWidget() {
                     availability={messages[messages.length - 1].availability!} 
                     alternatives={messages[messages.length - 1].alternatives}
                     onAlternativeClick={handleAvailabilitySubmit}
+                    onBook={() => router.push('/cart')}
                   />
                 )}
 

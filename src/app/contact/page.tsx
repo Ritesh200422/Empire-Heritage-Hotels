@@ -29,9 +29,12 @@ export default function ContactPage() {
               <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
               <textarea className="w-full px-4 py-2 border rounded-md" rows={4} placeholder="How can we help?"></textarea>
             </div>
-            <button type="button" className="bg-[#b8860b] text-white px-6 py-2 rounded-md hover:bg-[#997300]">
+            <a
+              href="mailto:reservations@empireheritage.demo?subject=Guest%20enquiry"
+              className="inline-flex bg-[#b8860b] text-white px-6 py-2 rounded-md hover:bg-[#997300]"
+            >
               Send Message
-            </button>
+            </a>
           </form>
         </div>
       </div>

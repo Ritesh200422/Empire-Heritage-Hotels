@@ -7,9 +7,10 @@ interface RoomCardsProps {
   availability: AvailabilityResult;
   alternatives?: Alternative[];
   onAlternativeClick?: (form: { checkIn: string; checkOut: string; adults: number }) => void;
+  onBook?: () => void;
 }
 
-export function RoomCards({ availability, alternatives, onAlternativeClick }: RoomCardsProps) {
+export function RoomCards({ availability, alternatives, onAlternativeClick, onBook }: RoomCardsProps) {
   const { options, checkIn, checkOut, adults } = availability;
   const { addItem } = useCartStore();
 
@@ -26,7 +27,7 @@ export function RoomCards({ availability, alternatives, onAlternativeClick }: Ro
       guests: adults,
       roomId: option.roomTypeId,
     });
-    alert(`Added ${option.name} to your cart!`);
+    onBook?.();
   };
 
   if (options.length === 0) {
