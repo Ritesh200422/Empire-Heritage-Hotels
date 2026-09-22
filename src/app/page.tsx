@@ -40,11 +40,17 @@ export default function Home() {
           <p className="text-xl md:text-2xl text-slate-200">
             Luxury stays and exquisite dining in the heart of the city.
           </p>
-          <div className="pt-8">
-            <Link href="/stay" className="inline-block bg-[#b8860b] hover:bg-[#997300] text-white font-medium text-lg px-8 py-4 rounded-md transition-colors shadow-lg">
+          <div className="pt-4 sm:pt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto">
+            <Link
+              href="/stay"
+              className="w-full sm:w-auto min-w-52 inline-flex items-center justify-center bg-[#b8860b] hover:bg-[#997300] text-white font-medium text-lg px-8 py-4 rounded-md transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#4a1c1c]"
+            >
               Book Your Stay
             </Link>
-            <Link href="/dine" className="inline-block bg-white text-[#4a1c1c] hover:bg-slate-100 font-medium text-lg px-8 py-4 rounded-md transition-colors shadow-lg ml-4">
+            <Link
+              href="/dine"
+              className="w-full sm:w-auto min-w-52 inline-flex items-center justify-center bg-white text-[#4a1c1c] hover:bg-slate-100 font-medium text-lg px-8 py-4 rounded-md transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#4a1c1c]"
+            >
               Explore Menu
             </Link>
           </div>
