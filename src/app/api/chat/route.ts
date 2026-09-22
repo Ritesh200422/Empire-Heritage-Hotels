@@ -40,6 +40,17 @@ function isRoomCatalogQuestion(message: string): boolean {
     && !/\b(available|availability|book|booking|reserve|reservation)\b/i.test(message);
 }
 
+function isAvailabilityQuestion(message: string): boolean {
+  return /\b(available|availability|vacant|open)\b/i.test(message)
+    && /\b(room|rooms|suite|suites|accommodation|stay)\b/i.test(message);
+}
+
+function hasExplicitStayDetails(message: string): boolean {
+  return /\b\d{4}-\d{2}-\d{2}\b/.test(message)
+    || /\b(today|tomorrow|tonight)\b/i.test(message)
+    || /\b(january|february|march|april|may|june|july|august|september|october|november|december)\b/i.test(message);
+}
+
 function needsConversationContext(message: string): boolean {
   return /^(and|also|what about|how about|which one|that one|the same|it|they|them|there|those|these)\b/i.test(message.trim())
     || /\b(as mentioned|as I said|earlier|previously|you said|your last answer|my booking|my reservation)\b/i.test(message);
@@ -123,6 +134,19 @@ export async function POST(request: NextRequest) {
           requestId,
         }, 200, kb);
       }
+    }
+
+    if (isAvailabilityQuestion(message) && !hasExplicitStayDetails(message)) {
+      const availabilityMessage =
+        'I can check live room availability for you. Please select your check-in date, check-out date, and number of adults below.';
+      await saveMessages(sessionId, message, availabilityMessage, requestId);
+      return jsonResponse({
+        type: 'availability_request',
+        mode: 'ai',
+        message: availabilityMessage,
+        missingFields: ['checkIn', 'checkOut', 'adults'],
+        requestId,
+      }, 200, kb);
     }
 
     // 5. Load conversation history from MySQL
