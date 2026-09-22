@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useCartStore } from '../store/cartStore';
 import { useAuthStore } from '../store/authStore';
 import { useState, useEffect } from 'react';
 
@@ -11,14 +10,11 @@ const appName = process.env.NEXT_PUBLIC_APP_NAME || 'Empire Heritage Hotels';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { items } = useCartStore();
   const { email, logout } = useAuthStore();
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => setMounted(true), []);
-
-  const totalCartItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const navLinks = [
     { name: 'Stay', path: '/stay' },
@@ -58,13 +54,17 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Link href="/cart" className="relative p-2 text-[#4a1c1c] hover:text-[#b8860b]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            {mounted && totalCartItems > 0 && (
-              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-[#b8860b] rounded-full">
-                {totalCartItems}
-              </span>
-            )}
+          <Link
+            href="/stay"
+            className="flex items-center gap-2 rounded-md p-2 text-[#4a1c1c] hover:bg-[#fcfbf8] hover:text-[#b8860b] transition-colors"
+            aria-label="Book your stay"
+            title="Book your stay"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="17" rx="2" />
+              <path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
+            </svg>
+            <span className="hidden lg:inline text-sm font-medium">Book a Stay</span>
           </Link>
           
           <div className="hidden md:block">
