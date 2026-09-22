@@ -197,21 +197,21 @@ async function main() {
         key: 'breakfast',
         title: 'Breakfast Policy',
         content:
-          'Breakfast is NOT included in the room rate. A full breakfast buffet is available at The Empire Heritage Restaurant for $25 per person per day. Children under 5 eat free. Half-board and full-board packages can be arranged at check-in.',
+          'Breakfast is NOT included in the room rate. A full breakfast buffet is available at The Empire Heritage Restaurant for ₹25 per person per day. Children under 5 eat free. Half-board and full-board packages can be arranged at check-in.',
       },
       {
         id: 'policy-pets',
         key: 'pets',
         title: 'Pet Policy',
         content:
-          'We welcome small pets (under 10 kg) in Standard and Deluxe rooms only. A pet fee of $30 per night applies. Service animals are welcome in all room types at no extra charge. Please notify us in advance.',
+          'We welcome small pets (under 10 kg) in Standard and Deluxe rooms only. A pet fee of ₹30 per night applies. Service animals are welcome in all room types at no extra charge. Please notify us in advance.',
       },
       {
         id: 'policy-payment',
         key: 'payment',
         title: 'Payment Policy',
         content:
-          'We accept Visa, MasterCard, American Express, and Discover. A valid credit card is required at check-in. A security deposit of $100 per night (up to $500) will be pre-authorized and released within 5-7 business days after check-out.',
+          'We accept Visa, MasterCard, American Express, and Discover. A valid credit card is required at check-in. A security deposit of ₹100 per night (up to ₹500) will be pre-authorized and released within 5-7 business days after check-out.',
       },
       {
         id: 'policy-checkin',
@@ -225,7 +225,7 @@ async function main() {
         key: 'children',
         title: 'Children Policy',
         content:
-          'Children of all ages are welcome. Children under 12 stay free when using existing bedding. Extra beds/cribs can be arranged for $20 per night. Our Family Suite is specifically designed for families with children.',
+          'Children of all ages are welcome. Children under 12 stay free when using existing bedding. Extra beds/cribs can be arranged for ₹20 per night. Our Family Suite is specifically designed for families with children.',
       },
     ],
   });
@@ -251,7 +251,7 @@ async function main() {
         id: 'faq-breakfast',
         question: 'Is breakfast included in the room rate?',
         answer:
-          'Breakfast is NOT included in the room rate. Our international breakfast buffet is available at The Empire Heritage Restaurant for $25 per person per day (children under 5 eat free). Half-board packages can be arranged at check-in.',
+          'Breakfast is NOT included in the room rate. Our international breakfast buffet is available at The Empire Heritage Restaurant for ₹25 per person per day (children under 5 eat free). Half-board packages can be arranged at check-in.',
         tags: ['breakfast', 'food', 'dining', 'included'],
       },
       {
@@ -265,7 +265,7 @@ async function main() {
         id: 'faq-parking',
         question: 'Is there parking available?',
         answer:
-          'Yes, we have a secure underground parking garage available for $15 per night. Valet parking service is also available. Electric vehicle charging stations are provided.',
+          'Yes, we have a secure underground parking garage available for ₹15 per night. Valet parking service is also available. Electric vehicle charging stations are provided.',
         tags: ['parking', 'car', 'valet', 'EV'],
       },
       {
@@ -279,14 +279,14 @@ async function main() {
         id: 'faq-pets',
         question: 'Can I bring my pet?',
         answer:
-          'Small pets under 10 kg are welcome in Standard and Deluxe rooms for $30/night. Service animals are welcome everywhere at no charge. Please notify us in advance.',
+          'Small pets under 10 kg are welcome in Standard and Deluxe rooms for ₹30/night. Service animals are welcome everywhere at no charge. Please notify us in advance.',
         tags: ['pets', 'dog', 'cat', 'animals'],
       },
       {
         id: 'faq-airport',
         question: 'Do you offer airport transfers?',
         answer:
-          'Yes, we offer airport shuttle service for $45 one-way or $80 round-trip. Please book at least 24 hours in advance through the front desk or by calling +1 (555) 123-4567.',
+          'Yes, we offer airport shuttle service for ₹45 one-way or ₹80 round-trip. Please book at least 24 hours in advance through the front desk or by calling +91 98765 43210.',
         tags: ['airport', 'transfer', 'shuttle', 'transport'],
       },
       {

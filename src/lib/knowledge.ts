@@ -113,7 +113,7 @@ Contact: ${kb.hotel.contact}`,
     const roomLines = kb.roomTypes
       .map(
         (rt) =>
-          `- [source: ${rt.id}] ${rt.name}: ${rt.description} | Max adults: ${rt.maxAdults}, Max occupancy: ${rt.maxOccupancy} | $${rt.pricePerNight}/night | Bed: ${rt.bedType} | Amenities: ${JSON.stringify(rt.amenities)}`,
+          `- [source: ${rt.id}] ${rt.name}: ${rt.description} | Max adults: ${rt.maxAdults}, Max occupancy: ${rt.maxOccupancy} | ₹${rt.pricePerNight}/night | Bed: ${rt.bedType} | Amenities: ${JSON.stringify(rt.amenities)}`,
       )
       .join('\n');
     sections.push(`## Room Types\n${roomLines}`);
@@ -123,7 +123,7 @@ Contact: ${kb.hotel.contact}`,
     const amenityLines = kb.amenities
       .map(
         (a) =>
-          `- [source: ${a.id}] ${a.name}: ${a.description}${a.hours ? ` | Hours: ${a.hours}` : ''}${a.extraCost != null ? ` | Extra cost: $${a.extraCost}` : ' | Free'}`,
+          `- [source: ${a.id}] ${a.name}: ${a.description}${a.hours ? ` | Hours: ${a.hours}` : ''}${a.extraCost != null ? ` | Extra cost: ₹${a.extraCost}` : ' | Free'}`,
       )
       .join('\n');
     sections.push(`## Amenities\n${amenityLines}`);
@@ -149,7 +149,7 @@ Contact: ${kb.hotel.contact}`,
         const vegStr = m.isVeg ? 'Vegetarian' : 'Non-Vegetarian';
         const spiceStr = ['Mild', 'Medium', 'Hot', 'Very Hot'][m.spiceLevel] || 'No spice';
         const bestStr = m.isBestseller ? ' | Bestseller' : '';
-        return `- [source: ${m.id}] ${m.name} (${m.category.name}): ${m.description} | ${vegStr} | ${spiceStr} | $${m.price}${bestStr}`;
+        return `- [source: ${m.id}] ${m.name} (${m.category.name}): ${m.description} | ${vegStr} | ${spiceStr} | ₹${m.price}${bestStr}`;
       })
       .join('\n');
     sections.push(`## Restaurant Menu\n${menuLines}`);

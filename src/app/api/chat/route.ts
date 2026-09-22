@@ -27,6 +27,7 @@ function cleanAssistantText(text: string) {
     .replace(/__(.*?)__/g, '$1')
     .replace(/`([^`]+)`/g, '$1')
     .replace(/\[source:\s*[^\]]+\]\s*/gi, '')
+    .replace(/\$(\d+(?:\.\d+)?)/g, '₹$1')
     .trim();
 }
 
@@ -373,7 +374,7 @@ async function handleToolCalls(
         const roomInfo = rooms
           .map(
             (r) =>
-              `${r.name}: ${r.description} ($${r.pricePerNight}/night, up to ${r.maxOccupancy} guests, ${r.bedType} bed)`,
+              `${r.name}: ${r.description} (₹${r.pricePerNight}/night, up to ${r.maxOccupancy} guests, ${r.bedType} bed)`,
           )
           .join('\n');
 
