@@ -24,3 +24,25 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes lobby-hero-scale {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.hero-lobby-image {
+  animation: lobby-hero-scale 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-lobby-image {
+    animation: none;
+  }
+}

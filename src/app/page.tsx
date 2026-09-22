@@ -22,9 +22,16 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative w-full h-[80vh] flex items-center justify-center bg-[#4a1c1c] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 z-10"></div>
-        {/* You could use an image background here, but keeping it simple/gradient for now as per instructions "no hotlinking copyrighted photos" */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#4a1c1c] to-[#602323]"></div>
+        <Image
+          src="/hotel-lobby-hero.png"
+          alt="Empire Heritage Hotels grand lobby"
+          fill
+          priority
+          sizes="100vw"
+          className="hero-lobby-image object-cover"
+        />
+        <div className="absolute inset-0 bg-black/45 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#4a1c1c]/75 via-transparent to-[#602323]/45 z-10"></div>
         
         <div className="relative z-20 text-center px-4 max-w-4xl mx-auto space-y-6">
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-[#fcfbf8] leading-tight">
